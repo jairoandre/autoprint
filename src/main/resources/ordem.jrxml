@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ordem" pageWidth="595" pageHeight="845" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="76479a3c-133e-4501-9ab5-ef98285538a8">
+	<property name="ireport.zoom" value="0.9090909090909107"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="LOGO" class="java.lang.Object"/>
+	<field name="tipoOs" class="java.lang.String"/>
+	<field name="solicitante" class="java.lang.String"/>
+	<field name="setor" class="java.lang.String"/>
+	<field name="bem" class="java.lang.String"/>
+	<field name="codigoBem" class="java.lang.String"/>
+	<field name="servico" class="java.lang.String"/>
+	<field name="motivoServico" class="java.lang.String"/>
+	<field name="oficina" class="java.lang.String"/>
+	<field name="observacao" class="java.lang.String"/>
+	<field name="especialidade" class="java.lang.String"/>
+	<field name="dataOs" class="java.lang.String"/>
+	<field name="localidade" class="java.lang.String"/>
+	<field name="cdOs" class="java.lang.String"/>
+	<field name="preventiva" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="35" uuid="80b0caee-32af-4bc3-b792-2a8ec58957a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORDEM DE SERVIÇO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="120" height="35" uuid="ed068acf-e628-4544-983a-f84da01beeba"/>
+				<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="55" height="30" uuid="9565e748-fc51-44ed-8128-05ba142f34d6"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº. OS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="55" y="0" width="295" height="30" uuid="e2ae4c85-5201-42bd-93f1-a5cf94cb51ad"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cdOs} + " - " + $F{preventiva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="0" width="205" height="30" uuid="a49ac7b3-e455-4210-9ab7-9159dcc82cb6"/>
+				<box topPadding="0">
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Data OS: " + $F{dataOs}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="251" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="20" uuid="88c05c2c-df44-477e-91d4-0ed662a5a765"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de OS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="80" height="20" uuid="dd1e3906-799a-43e7-be7a-7b3b1849dc61"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solicitante:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="80" height="20" uuid="1fee1bdc-6811-4520-aa00-bebca9b63994"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Setor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="80" height="20" uuid="5ed921ed-8364-4515-b73c-d86cbcab586b"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bem:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="160" width="80" height="40" uuid="f567f627-3618-40ce-9449-bfab2592c864"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serviço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="140" width="80" height="20" uuid="016d444c-329c-464e-ae60-a213fb4cd842"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Oficina:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="200" width="80" height="40" uuid="566edaa1-10da-4817-b2a1-af10599731fb"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observação:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="80" height="20" uuid="d7cdb025-77f5-4986-a245-bf2627986f8f"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Localidade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="120" width="65" height="20" uuid="d534e3b3-af48-4832-9c5d-ecfa8479e111"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cód. Bem:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="80" height="20" uuid="d6a8d017-61c6-41fc-b4e3-87fd4a26fe28"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo serv.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="80" height="20" uuid="36f85e2f-ee13-4444-9d6e-75b9941ef662"/>
+				<box topPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Especialidade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="0" width="474" height="20" uuid="c21185ee-fe4b-4ac8-a4dc-7393da2f7580"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoOs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="40" width="474" height="20" uuid="aa8e68eb-def5-4352-ba55-0f887fc75b45"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="100" width="474" height="20" uuid="0ae2f7e2-5663-4701-be52-16c0917f1050"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{setor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="120" width="100" height="20" uuid="3eb30701-05af-4c52-941b-a7fc528c5a15"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoBem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="120" width="310" height="20" uuid="18d58a74-6931-47f4-9534-a7de777e5f58"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="160" width="475" height="40" uuid="63a813c1-591e-4ec5-a52f-7f5e87b2eaaa"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="140" width="474" height="20" uuid="2498657d-3c0e-4f38-87ee-149d8f58203e"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oficina}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="200" width="475" height="40" uuid="b10ed8f1-ea9e-45e3-8ddc-2bcfa040f92b"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="20" width="475" height="20" uuid="8a99799b-3fd1-4930-abc3-669e8e41b88f"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{especialidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="60" width="474" height="20" uuid="305c9612-b54b-4b1c-ac54-e2ccbe743bc4"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{localidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="80" width="474" height="20" uuid="3e512813-efad-4a90-9409-54292dcb59c1"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivoServico}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="250" width="100" height="1" uuid="f0049d37-d147-4528-9671-cf1fa0b511eb"/>
+			</break>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="205" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="85" width="277" height="15" uuid="70577951-58fd-4380-b2b5-ae9cbbff19d4"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[início do serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="85" width="278" height="15" uuid="4e6b407c-0bee-4d4b-9ead-813564b03c11"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[término do serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="277" height="25" uuid="4d3916ef-b5e2-4274-bcbb-ed3e9e8c26b2"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[____/____/________     ____ : ____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="100" width="278" height="25" uuid="1d9a3a36-d619-4516-b4be-b3466683dc39"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[____/____/________     ____ : ____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="130" width="555" height="75" uuid="cae5bc89-c209-4a5e-9512-d13267b1979d"/>
+				<box topPadding="2" leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situação:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="20" uuid="6d80b21a-9efe-4832-ac4b-f432128baf2b"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Executor 01:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="475" height="20" uuid="bbe18569-c8ca-45f0-a395-e69b928a3f71"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="80" height="20" uuid="468a044f-ae20-4967-818a-e64583a59710"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Executor 02:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="20" width="475" height="20" uuid="24ed42c7-cace-47c1-bb05-8b9fda01fbb4"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="40" width="475" height="20" uuid="30413e96-76c9-4dfd-930c-e980ba452bf2"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="80" height="20" uuid="7a7da968-823c-4108-96e2-0bbf48415ff4"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Localidade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="60" width="475" height="20" uuid="8ef5ccd1-1dfe-4d76-bc94-a98895045a27"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="80" height="20" uuid="050dabca-18fd-4894-9b42-065143480bbe"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Lucida Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situação:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
