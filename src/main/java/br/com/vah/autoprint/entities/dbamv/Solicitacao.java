@@ -25,6 +25,10 @@ public class Solicitacao implements Serializable {
   @Column(name = "DT_PEDIDO")
   private Date dataPedido;
 
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "DT_EXECUCAO")
+  private Date dataExecucao;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "CD_MOT_SERV")
   private MotivoServico motivo;
@@ -86,6 +90,14 @@ public class Solicitacao implements Serializable {
 
   public void setDataPedido(Date dataPedido) {
     this.dataPedido = dataPedido;
+  }
+
+  public Date getDataExecucao() {
+    return dataExecucao;
+  }
+
+  public void setDataExecucao(Date dataExecucao) {
+    this.dataExecucao = dataExecucao;
   }
 
   public String getObservacao() {

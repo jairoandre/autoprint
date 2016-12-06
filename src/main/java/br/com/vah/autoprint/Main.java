@@ -10,6 +10,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.*;
+import org.hibernate.sql.JoinType;
 import org.hibernate.transform.Transformers;
 
 import javax.persistence.EntityManager;
@@ -88,6 +89,7 @@ public class Main implements Runnable {
 
     crit.createAlias("tipo", "t").add(Restrictions.ne("t.preliminar", "P"));
     crit.createAlias("oficina", "o").add(Restrictions.not(Restrictions.in("o.id", 26l, 4l)));
+    crit.createAlias("bens", "b", JoinType.LEFT_OUTER_JOIN);
 
     return (List<Solicitacao>) crit.list();
   }
@@ -118,14 +120,15 @@ public class Main implements Runnable {
     dc.setProjection(Property.forName("id"));
     crit.add(Subqueries.propertyNotIn("id", dc));
 
-    crit.add(Restrictions.between("dataPedido", yesterday(), today()));
+    crit.add(Restrictions.le("dataPedido", today()));
+    crit.add(Restrictions.isNull("dataExecucao"));
 
     crit.createAlias("tipo", "t").add(Restrictions.eq("t.preliminar", "P"));
     Disjunction disj = Restrictions.disjunction();
     disj.add(Restrictions.not(Restrictions.in("o.id", 26l, 4l)));
     disj.add(Restrictions.isNull("oficina"));
-
-    crit.createAlias("oficina", "o").add(disj);
+    crit.createAlias("oficina", "o", JoinType.LEFT_OUTER_JOIN).add(disj);
+    crit.createAlias("bens", "b", JoinType.LEFT_OUTER_JOIN);
 
     return (List<Solicitacao>) crit.list();
   }
@@ -151,16 +154,15 @@ public class Main implements Runnable {
 
     String termoImpressora = props.getProperty("print");
 
-    System.out.println("Buscando impressora pelo termo: " + termoImpressora);
     PrintService printer = loadPrintService(props.getProperty("print"));
-    if (printer != null) {
-      System.out.println("Impressora encontrada: " + printer.getName());
-    } else {
-      System.out.println("Impressora não encontrada.");
+
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+    if (printer == null) {
+      System.out.println(sdf.format(new Date()) + " -> Impressora não encontrada: " + termoImpressora);
       return;
     }
 
-    System.out.println("Preparando conexão com o banco de dados.");
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence", dbProps);
     EntityManager em = emf.createEntityManager();
     EntityTransaction et = em.getTransaction();
@@ -171,8 +173,6 @@ public class Main implements Runnable {
 
       List<Solicitacao> solicitacoes = getSolicitacoes(session);
       List<Solicitacao> solicitacoesPrev = getSolicitacoesPreventiva(session);
-
-      System.out.println("Total de ordens encontradas: " + (solicitacoes.size() + solicitacoesPrev.size()));
 
       List<SolicitacaoDTO> solicitacoesToPrint = new ArrayList<>();
       List<ControleImpressaoOS> controleToRegister = new ArrayList<>();
@@ -202,9 +202,8 @@ public class Main implements Runnable {
         controlePrevToRegister.add(toControleImpressaoPrev(solicitacao));
       }
 
-      if (solicitacoesToPrint.isEmpty()) {
-        System.out.println("Sem solicitações para impressão");
-      } else {
+      if (!solicitacoesToPrint.isEmpty()) {
+        System.out.println(sdf.format(new Date()) + " -> Imprimindo " + solicitacoesToPrint.size() + " documento(s).");
         ReportLoader.fillReport("/ordem.jasper", solicitacoesToPrint, printer);
         Boolean gravou = false;
 
@@ -224,12 +223,11 @@ public class Main implements Runnable {
       }
 
     } catch (Exception e) {
-      System.out.println(String.format("Erro inesperado: %s", e.getMessage()));
+      System.out.println(String.format("%s -> Erro inesperado: %s", sdf.format(new Date()), e.getMessage()));
     } finally {
       em.close();
       emf.close();
     }
-    System.out.println("Impressão OS - Thread " + count + " encerrado");
   }
 
   private static Properties loadProperties(String[] args) {
@@ -246,10 +244,11 @@ public class Main implements Runnable {
     } catch (Exception e) {
       Properties prop = new Properties();
       prop.put("print", "T.I - Brother_HL-6180DW");
-      prop.put("url", "jdbc:oracle:thin:@10.1.0.30:1521:mvprod");
-      prop.put("user", "dbamv");
-      prop.put("password", "vahupdate16");
-      prop.put("interval", "300000");
+      //prop.put("url", "jdbc:oracle:thin:@10.1.0.235:1521:simula");
+      prop.put("url", "jdbc:oracle:thin:@10.1.0.235:1521:treinamento");
+      prop.put("user", "usrdbvah");
+      prop.put("password", "dbamvah2016");
+      prop.put("interval", "60000");
       return prop;
     }
   }

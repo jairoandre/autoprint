@@ -25,7 +25,7 @@ public class SolicitacaoDTO {
   private String preventiva = "-";
 
   public SolicitacaoDTO(Solicitacao solicitacao) {
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     cdOs = solicitacao.getId().toString();
     solicitante = solicitacao.getSolicitante();
     servico = solicitacao.getDescricao();
@@ -35,10 +35,17 @@ public class SolicitacaoDTO {
     dataOs = sdf.format(solicitacao.getDataPedido());
     tipoOs = solicitacao.getTipo().getNome();
     setor = solicitacao.getSetor().getNome();
-    if (solicitacao.getBens() != null) {
-      bem = solicitacao.getBens().getNome();
-      codigoBem = solicitacao.getBens().getId().toString();
+    try {
+      if (solicitacao.getBens() != null) {
+        bem = solicitacao.getBens().getNome();
+        codigoBem = solicitacao.getBens().getId().toString();
+      }
+    } catch (Exception e) {
+      bem = "Não localizado";
+      codigoBem = "N/A";
     }
+
+
     if (solicitacao.getMotivo() != null) {
       motivoServico = solicitacao.getMotivo().getNome();
     }
