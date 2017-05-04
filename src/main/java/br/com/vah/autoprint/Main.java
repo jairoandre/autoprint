@@ -85,11 +85,21 @@ public class Main implements Runnable {
     dc.setProjection(Property.forName("id"));
     crit.add(Subqueries.propertyNotIn("id", dc));
 
-    crit.add(Restrictions.between("dataPedido", yesterday(), today()));
+    //crit.add(Restrictions.between("dataPedido", yesterday(), today()));
 
-    crit.createAlias("tipo", "t").add(Restrictions.ne("t.preliminar", "P"));
-    crit.createAlias("oficina", "o").add(Restrictions.not(Restrictions.in("o.id", 26l, 4l)));
-    crit.createAlias("bens", "b", JoinType.LEFT_OUTER_JOIN);
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt_BR"));
+
+
+    try {
+      Date data = sdf.parse("01/05/2017");
+      crit.add(Restrictions.eq("dataPedido", data));
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+
+    //crit.createAlias("tipo", "t").add(Restrictions.ne("t.preliminar", "P"));
+    //crit.createAlias("oficina", "o").add(Restrictions.not(Restrictions.in("o.id", 26l, 4l)));
+    //crit.createAlias("bens", "b", JoinType.LEFT_OUTER_JOIN);
 
     return (List<Solicitacao>) crit.list();
   }
@@ -154,14 +164,15 @@ public class Main implements Runnable {
 
     String termoImpressora = props.getProperty("print");
 
-    PrintService printer = loadPrintService(props.getProperty("print"));
-
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+    /*
+    PrintService printer = loadPrintService(props.getProperty("print"));
 
     if (printer == null) {
       System.out.println(sdf.format(new Date()) + " -> Impressora não encontrada: " + termoImpressora);
       return;
-    }
+    }*/
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence", dbProps);
     EntityManager em = emf.createEntityManager();
@@ -172,7 +183,7 @@ public class Main implements Runnable {
       Session session = (Session) em.getDelegate();
 
       List<Solicitacao> solicitacoes = getSolicitacoes(session);
-      List<Solicitacao> solicitacoesPrev = getSolicitacoesPreventiva(session);
+      List<Solicitacao> solicitacoesPrev = new ArrayList<>();// getSolicitacoesPreventiva(session);
 
       List<SolicitacaoDTO> solicitacoesToPrint = new ArrayList<>();
       List<ControleImpressaoOS> controleToRegister = new ArrayList<>();
@@ -182,12 +193,12 @@ public class Main implements Runnable {
 
       // Solicitações
       for (Solicitacao solicitacao : solicitacoes) {
-        if (documentos++ > 5) {
-          break;
-        }
+//        if (documentos++ > 5) {
+//          break;
+//        }
         solicitacao.setObservacao(loadObservacao(solicitacao.getId(), session));
         solicitacoesToPrint.add(new SolicitacaoDTO(solicitacao));
-        controleToRegister.add(toControleImpressao(solicitacao));
+        // controleToRegister.add(toControleImpressao(solicitacao));
       }
 
       documentos = 1;
@@ -203,23 +214,33 @@ public class Main implements Runnable {
       }
 
       if (!solicitacoesToPrint.isEmpty()) {
-        System.out.println(sdf.format(new Date()) + " -> Imprimindo " + solicitacoesToPrint.size() + " documento(s).");
-        ReportLoader.fillReport("/ordem.jasper", solicitacoesToPrint, printer);
-        Boolean gravou = false;
 
-        for (ControleImpressaoOS cOs : controleToRegister) {
-          em.persist(cOs);
-          gravou = true;
-        }
+        solicitacoesToPrint.forEach((s) -> {
+          List<SolicitacaoDTO> sol = new ArrayList<SolicitacaoDTO>();
+          sol.add(s);
+          try {
+            ReportLoader.fillReport("/ordem.jasper", sol, null);
+          } catch (Exception e) {
 
-        for (ControleImpressaoPrevisaoOS cOs : controlePrevToRegister) {
-          em.persist(cOs);
-          gravou = true;
-        }
-
-        if (gravou) {
-          et.commit();
-        }
+          }
+        });
+//        System.out.println(sdf.format(new Date()) + " -> Imprimindo " + solicitacoesToPrint.size() + " documento(s).");
+//
+//        Boolean gravou = false;
+//
+//        for (ControleImpressaoOS cOs : controleToRegister) {
+//          em.persist(cOs);
+//          gravou = true;
+//        }
+//
+//        for (ControleImpressaoPrevisaoOS cOs : controlePrevToRegister) {
+//          em.persist(cOs);
+//          gravou = true;
+//        }
+//
+//        if (gravou) {
+//          et.commit();
+//        }
       }
 
     } catch (Exception e) {
@@ -260,18 +281,16 @@ public class Main implements Runnable {
     long last = System.currentTimeMillis();
     boolean execute = true;
     int count = 0;
-    while (true) {
-      long curr = System.currentTimeMillis();
-      long delta = curr - last;
-      if (delta >= interval) {
-        last = curr;
-        execute = true;
-      }
-      if (execute) {
-        execute = false;
-        new Main(count++, props);
-      }
-    }
 
+    long curr = System.currentTimeMillis();
+    long delta = curr - last;
+    if (delta >= interval) {
+      last = curr;
+      execute = true;
+    }
+    if (execute) {
+      execute = false;
+      new Main(count++, props);
+    }
   }
 }
